@@ -1,7 +1,7 @@
 ---
-title: "Inference for model-agnostic variable importance"
+title: "Inference for model-agnostic longitudinal variable importance"
 author: "Brian D. Williamson, PhD<br> <span style= 'font-size: 75%;'> Kaiser Permanente Washington Health Research Institute </span>"
-date: "21 June, 2022 <br> <a href = 'https://bdwilliamson.github.io/talks' style = 'color: white;'>https://bdwilliamson.github.io/talks</a>"
+date: "17 December, 2022 <br> <a href = 'https://bdwilliamson.github.io/talks' style = 'color: white;'>https://bdwilliamson.github.io/talks</a>"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css

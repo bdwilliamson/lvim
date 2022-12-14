@@ -1,10 +1,10 @@
-# generalvim-icsa
+# lvim
 
 **Author: Brian Williamson**
 
-Slides for a talk on inference for model-agnostic variable importance.
+Slides for a talk on inference for longitudinal model-agnostic variable importance.
 
-The slides may be viewed [here](https://bdwilliamson.github.io/generalvim-icsa).
+The slides may be viewed [here](https://bdwilliamson.github.io/lvim).
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
