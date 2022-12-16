@@ -337,72 +337,6 @@ knitr::include_graphics("img/vim_ic50.censored_pres_r2_acc_auc_conditional_simpl
 
 ---
 
-## Importance of cross-fitting
-
-A key regularity condition: $f_n$ and $f_{n,-s}$ .red[not too complex]
-
---
-
-This condition can be removed using .blue1[cross-fitting]
-
---
-
-&zwj;Experiments: 
-* 2 important features, $p - 2$ noise features, binary outcome
-* Importance measured via accuracy
-* Scenario 1: $p = 4$, covariates independent
-* Scenario 2: $p \in \{50, 100, 200\}$, some covariates correlated
-
----
-
-## Cross-fitting: Scenario 1
-
-```{r p-4-null-results, echo = FALSE, out.height="360px", fig.align="center"}
-knitr::include_graphics("img/main_null_accuracy_3_p_4_boot_0.png")
-```
-
----
-
-## Cross-fitting: Scenario 2
-
-```{r higher-dim-null-results, echo = FALSE, out.height="450px", out.width="600px", fig.align="center"}
-knitr::include_graphics("img/supplement_highdim_accuracy_1.png")
-```
-
----
-
-## Extension: correlated features
-
-So far: importance of $(X_j: j \in s)$ relative to $X$
-
---
-
-$\color{red}{\text{Potential issue}}$: correlated features
-
-&zwj;Example: two highly correlated features, age and foot size; predicting toddlers' reading ability
-
---
-
-* True importance of age = 0 (since foot size is in the model)
-* True importance of foot size = 0 (since age is in the model)
-
---
-
-&zwj;Idea: average contribution of a feature over all subsets!
-
---
-
-True importance of age = average(.blue1[increase in predictiveness from adding age to foot size] & .green[increase in predictiveness from using age over nothing])
-
---
-
-Borrowed ideas from game theory to develop a subset-averaged framework
-
-
-Details in Williamson and Feng (2020)
-
----
-
 ## Extension: longitudinal VIMs
 
 So far: cross-sectional variable importance
@@ -456,6 +390,8 @@ Manuscript with details forthcoming.
 * simple estimators
 * machine learning okay
 * valid inference, testing
+* extension to longitudinal VIMs
+* extension to correlated features .small[ (Williamson and Feng, 2020) ]
 
 Check out the software:
 
