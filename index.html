@@ -7,6 +7,8 @@
     <script src="index_files/header-attrs-2.16/header-attrs.js"></script>
     <link href="index_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
     <script src="index_files/tile-view-0.2.6/tile-view.js"></script>
+    <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+    <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -20,7 +22,7 @@ class: center, middle, title-slide
 ### Brian D. Williamson, PhD<br> <span style="font-size: 75%;"> Kaiser Permanente Washington Health Research Institute </span>
 ]
 .date[
-### 17 December, 2022 <br> <a href = 'https://bdwilliamson.github.io/talks' style = 'color: white;'>https://bdwilliamson.github.io/talks</a>
+### XX December, 2023 <br> <a href = 'https://bdwilliamson.github.io/talks' style = 'color: white;'>https://bdwilliamson.github.io/talks</a>
 ]
 
 ---
@@ -38,8 +40,7 @@ class: center, middle, title-slide
 ## Acknowledgments
 
 This work was done in collaboration with:
-&lt;img src="img/people1.PNG" width="65%" style="display: block; margin: auto;" /&gt;
-&lt;img src="img/people3.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/people4.PNG" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -76,7 +77,7 @@ Example uses of .blue2[intrinsic] variable importance:
 
 --
 
-* is it worth collecting a given covariate for the sake of predicting neutralization sensitivity?
+* does the importance of item 9 on the Patient Health Questionnaire in predicting risk of suicide attempt change over time?
 
 
 ---
@@ -168,59 +169,13 @@ How should we make inference on `\(\psi_{0,s}\)`?
 
 3. using influence function-based debiasing [e.g., Pfanzagl (1982)], we get estimator `$$\color{magenta}{\psi_{n,s}^* := \left[1 - \frac{\frac{1}{n}\sum_{i=1}^n\{Y_i - \mu_n(X_i)\}^2}{\frac{1}{n}\sum_{i=1}^n (Y_i - \overline{Y}_n)^2}\right] - \left[1 - \frac{\frac{1}{n}\sum_{i=1}^n\{Y_i - \mu_{n,-s}(X_i)\}^2}{\frac{1}{n}\sum_{i=1}^n (Y_i - \overline{Y}_n)^2}\right]}$$`
 
----
-
-## Case study: ANOVA importance
-
-`$$\color{magenta}{\psi_{n,s}^* := \left[1 - \frac{\frac{1}{n}\sum_{i=1}^n\{Y_i - \mu_n(X_i)\}^2}{\frac{1}{n}\sum_{i=1}^n (Y_i - \overline{Y}_n)^2}\right] - \left[1 - \frac{\frac{1}{n}\sum_{i=1}^n\{Y_i - \mu_{n,-s}(X_i)\}^2}{\frac{1}{n}\sum_{i=1}^n (Y_i - \overline{Y}_n)^2}\right]}$$`
-
-Key observations:
-* `\(\psi_{n,s}^* =\)` plug-in estimator of `\(\psi_{0,s}\)` based on difference-in- `\(R^2\)` representation
---
-
-* .blue1[No need to debias] the difference-in- `\(R^2\)` estimator!
---
-
-* Why does this happen? 
-
-  .blue2[Estimation of] `\(\mu_{0}\)` .blue2[and] `\(\mu_{0,-s}\)` .blue2[yields only second-order terms, so estimator behaves as if they are **known**]
-  
 --
 
 Under regularity conditions, `\(\psi_{n,s}^*\)` is consistent and nonparametric efficient.
 
---
-
 In particular, `\(\sqrt{n}(\psi_{n,s}^* - \psi_{0,s})\)` has a mean-zero normal limit with estimable variance.
 
 [Details in Williamson et al. (2020)]
----
-
-## Preparing for AMP
-
-&lt;img src="img/amp.png" width="200px" style="display: block; margin: auto;" /&gt;
-
-* 611 HIV-1 pseudoviruses
-* Outcome: neutralization sensitivity/resistance to antibody
-
---
-
-**Goal:** pre-screen features for inclusion in secondary analysis
-* 800 individual features, 13 groups of interest
-
---
-
-&amp;zwj;Procedure: 
-1. Estimate `\(\mu_n\)`, `\(\mu_{n,-s}\)` using Super Learner [van der Laan et al. (2007)]
-2. Estimate and do inference on variable importance `\(\psi_{n,s}^*\)` 
-
-.small[ [Details in Magaret et al. (2019) and Williamson et al. (2021b)] ]
-
----
-
-## Preparing for AMP: R-squared
-
-&lt;img src="img/vim_ic50.censored_pres_r2_conditional_simple.png" width="5249" height="480px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -296,38 +251,224 @@ We can write `\(V(f_n, P_n) - V(f_{0}, P_0) \approx \color{green}{V(f_0, P_n) - 
 
 In other words: `\(f_0\)` and `\(f_{0,-s}\)` **can be treated as known** in studying behavior of `\(\psi_{n,s}^*\)`!
 
-[Details in Williamson et al. (2021b)]
+[Details in Williamson et al. (2022)]
 
 ---
 
-## Preparing for AMP: the full picture
-
-&lt;img src="img/vim_ic50.censored_pres_r2_acc_auc_conditional_simple.png" width="5249" height="480px" style="display: block; margin: auto;" /&gt;
-
----
-
-## Extension: longitudinal VIMs
+## Longitudinal VIMs
 
 So far: cross-sectional variable importance
 
 Can we do inference on variable importance longitudinally?
 
-&lt;img src="index_files/figure-html/longitudinal-vim-1.png" width="480px" height="360px" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/lvim_example.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Extension: longitudinal VIMs
+## Summarizing a VIM trajectory
 
-&lt;img src="index_files/figure-html/longitudinal-vim-2-1.png" width="360px" height="240px" style="display: block; margin: auto;" /&gt;
+&amp;zwj;Define: 
+* contiguous set of timepoints `\(\tau := [t_0, t_1]\)`
+* variable importance at each time point `\(\psi_{0,s,t}\)`, `\(t \in \tau\)`
+* trajectory interpolator `\(h\)`
 
-.blue2[Yes!] And we can do inference on summaries of the time series:
-* .blue1[average importance] over a contiguous subset of time points
-* .green[linear trend] over a contiguous subset of time points
-* .blue2[area under the trajectory] over a contiguous subset of time points
+--
 
-Inference relies on the functional delta method.
+Examples of summary measures over `\(\tau\)`, `\(m(\psi_{0,s,\tau})\)`:
 
-Manuscript with details forthcoming.
+&amp;zwj;Mean: `\(\lVert \tau \rVert^{-1} \sum_{t \in \tau} \psi_{0,s,t}\)`
+
+--
+
+Linear trend: with `\(U = \begin{bmatrix} 1 &amp; \cdots &amp; 1 \\ t_0 &amp; \cdots &amp; t_1 \end{bmatrix}^\top\)`, `\((U^\top U)^{-1}U^\top \psi_{0,s,t}\)`
+
+--
+
+Area under the trajectory curve (AUTC): `\(\int_\tau h(t, \psi_{0,s})dt\)`
+
+--
+
+Geometric mean rate of change (GMRC): `\(\exp [\lVert \tau \rVert^{-1}\sum_{t \in \tau} \log \{\lvert h'(t, \psi_{0,s})\}]\)`
+
+---
+
+## Summarizing a VIM trajectory
+
+&lt;img src="img/lvim_example.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+| Summary | VIM 1 | VIM 2 | VIM 3 |
+|:-------:--------:-------:-------|
+| Mean    | 0.3   | 0.8   | 0.06  |
+| Slope   | 0.1   | 0     | -0.05 |
+| AUTC    | 1.2   | 3.2   | 0.2   |
+| GMRC    | 0.1   | 0     | 0     |
+
+---
+
+## Summarizing a VIM trajectory
+
+How should we make inference on `\(m(\psi_{0,s,\tau})\)`?
+--
+
+1. construct estimators `\(f_{n,t}\)`, `\(f_{n,-s,t}\)` of `\(f_{0,t}\)`, `\(f_{0,-s,t}\)` (e.g., with machine learning)
+
+--
+
+2. plug in: `\(\psi_{n,s,t}^* = V(f_{n,s,t}, P_{n,s,t}) - V(f_{n,-s,t}, P_{n,s,t})\)` 
+
+--
+
+3. plug in: `$$m_{n,s}^* := m(\psi_{n,s,\tau}^*)$$`
+
+--
+
+4. Inference can be carried out using influence functions.
+
+[Details in Williamson et al. (2023)]
+
+---
+
+## VIMs for predictors of suicide risk
+
+Data gathered from electronic health record on sample of 343,950 visits made by 184,782 people
+
+Key variables: .small[ Jacobs et al. (2010) ]
+* Patient Health Questionnaire (PHQ)
+  * PHQ-8 total score (depressive symptoms) 
+  * PHQi9 (suicidal ideation)
+* Prior recorded self-harm
+* Age
+* Sex (sex assigned at birth)
+
+Outcome: suicide attempt in 90 days following mental health visit
+
+Sampled one visit per person at six possible measurement times over 18 months:
+* 99,991 people had only one visit
+* 4,093 people had six visits
+* Rate of suicide attempt approximately 0.5% at all time points
+
+---
+
+## VIMs for predictors of suicide risk
+
+&amp;zwj;Goal: estimate VIMs for PHQi9 and prior recorded self-harm
+
+Variable sets considered:
+1. no variables
+2. PHQi9 alone
+3. age and sex (base set)
+4. age, sex, and PHQi9
+5. age, sex, and prior self-harm
+6. age, sex, prior self-harm, and PHQi9
+
+--
+
+Estimate prediction functions at each time point using the Super Learner [ van der Laan et al. (2007) ]
+
+---
+
+## VIMs for predictors of suicide risk
+
+&lt;img src="img/vims_of_interest_over_time_presentation.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## VIMs for predictors of suicide risk
+
+&lt;table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Summary &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Comparison &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Estimate &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; SE &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 95% CI &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; p-value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mean &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Age and sex versus no variables &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -0.019 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-0.042, 0.005] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.943 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mean &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PHQi9 versus no variables &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.132 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.019 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [0.096, 0.169] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt; 0.001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mean &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Prior self-harm variables versus age and sex &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.029 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [0.005, 0.052] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.008 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mean &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PHQi9 versus age and sex &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.040 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [0.016, 0.064] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt; 0.001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mean &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PHQi9 versus age, sex, and prior self-harm variables &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.033 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [0.010, 0.056] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.002 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Trend: slope &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Age and sex versus no variables &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.003 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-0.011, 0.016] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.710 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Trend: slope &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PHQi9 versus no variables &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-0.014, 0.028] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.507 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Trend: slope &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Prior self-harm variables versus age and sex &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -0.016 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-0.030, -0.002] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.023 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Trend: slope &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PHQi9 versus age and sex &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -0.005 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-0.019, 0.009] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.486 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Trend: slope &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PHQi9 versus age, sex, and prior self-harm variables &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; -0.005 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-0.018, 0.008] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.468 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
@@ -343,7 +484,7 @@ Manuscript with details forthcoming.
 
 Check out the software:
 
-* [R package `vimp`](https://github.com/bdwilliamson/vimp)
+* R packages [`vimp`](https://github.com/bdwilliamson/vimp), [`lvimp`](https://github.com/bdwilliamson/lvimp)
 * [Python package `vimpy`](https://github.com/bdwilliamson/vimpy)
 
 &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; https://github.com/bdwilliamson | &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"&gt;&lt;/path&gt;&lt;/svg&gt; https://bdwilliamson.github.io
@@ -353,20 +494,11 @@ Check out the software:
 ## References
 
 * .small[ Breiman L. 2001. Random forests. _Machine Learning_.]
-* .small[ Breiman L. 2001. Statistical modeling: the two cultures. _Statistical Science_.]
-* .small[ Chernozhukov V et al. 2018. Double/debiased machine learning for treatment and structural parameters. _The Econometrics Journal_.]
-* .small[ Magaret CA, Benkeser DC, Williamson BD, et al. 2019. Prediction of VRC01 neutralization sensitivity by HIV-1 gp160 sequence features. _PLoS Computational Biology_. ]
 * .small[ van der Laan MJ. 2006. Statistical inference for variable importance. _The International Journal of Biostatistics_.]
 * .small[ van der Laan MJ, Polley EC, and Hubbard AE. 2007. Super Learner. _Statistical Applications in Genetics and Molecular Biology_. ]
-* .small[ van der Laan MJ and Rose S. 2011. Targeted learning: causal inference for observational and experimental data. _Springer_.]
-
----
-
-## References
-
-* .small[ Williamson BD, Magaret CA, Gilbert PB, Nizam S, Simmons C, and Benkeser DC. 2021a. Super LeArner Prediction of NAb Panels (SLAPNAP): a containerized tool for predicting combination monoclonal broadly neutralizing antibody sensitivity. _Bioinformatics_.]
 * .small[ Williamson BD, Gilbert P, Carone M, and Simon N. 2020. Nonparametric variable importance assessment using machine learning techniques (+ rejoinder to discussion). _Biometrics_. ]
-* .small[ Williamson BD, Gilbert P, Simon N, and Carone M. 2021b. A general framework for inference on algorithm-agnostic variable importance. _Journal of the American Statistical Association_. ]
+* .small[ Williamson BD, Gilbert P, Simon N, and Carone M. 2022. A general framework for inference on algorithm-agnostic variable importance. _Journal of the American Statistical Association_. ]
+* .small[ Williamson BD, Moodie EEM, and Shortreed SM. 2023. Inference on summaries of a model-agnostic longitudinal variable importance trajectory. _arXiv https://arxiv.org/pdf/2311.01638.pdf_. ]
 * .small[ Williamson BD and Feng J. 2020. Efficient nonparametric statistical inference on population feature importance using Shapley values. _ICML_. ]
 
     </textarea>
