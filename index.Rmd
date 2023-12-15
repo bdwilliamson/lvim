@@ -1,7 +1,7 @@
 ---
 title: "Inference for model-agnostic longitudinal variable importance"
 author: "Brian D. Williamson, PhD<br> <span style= 'font-size: 75%;'> Kaiser Permanente Washington Health Research Institute </span>"
-date: "27 November, 2023 <br> <a href = 'https://bdwilliamson.github.io/talks' style = 'color: white;'>https://bdwilliamson.github.io/talks</a>"
+date: "18 December, 2023 <br> <a href = 'https://bdwilliamson.github.io/talks' style = 'color: white;'>https://bdwilliamson.github.io/talks</a>"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -295,7 +295,6 @@ knitr::include_graphics(c(
 &zwj;Define: 
 * contiguous set of timepoints $\tau := [t_0, t_1]$
 * variable importance at each time point $\psi_{0,s,t}$, $t \in \tau$
-* trajectory interpolator $h$
 
 --
 
@@ -305,15 +304,7 @@ Examples of summary measures over $\tau$, $m(\psi_{0,s,\tau})$:
 
 --
 
-Linear trend: with $U = \begin{bmatrix} 1 & \cdots & 1 \\ t_0 & \cdots & t_1 \end{bmatrix}^\top$, $(U^\top U)^{-1}U^\top \psi_{0,s,t}$
-
---
-
-Area under the trajectory curve (AUTC): $\int_\tau h(t, \psi_{0,s})dt$
-
---
-
-Geometric mean rate of change (GMRC): $\exp [\lVert \tau \rVert^{-1}\sum_{t \in \tau} \log \{\lvert h'(t, \psi_{0,s})\}]$
+Linear trend: $(\beta_0, \beta_1) = \text{arg min}_{(\alpha_1, \alpha_2) \in \mathbb{R}^2} \lVert \psi_{0,s,t} - \alpha_1  - t \alpha_2\rVert_2^2$
 
 ---
 
@@ -329,8 +320,6 @@ knitr::include_graphics(c(
 |:-------:--------:-------:-------|
 | Mean    | 0.3   | 0.8   | 0.06  |
 | Slope   | 0.1   | 0     | -0.05 |
-| AUTC    | 1.2   | 3.2   | 0.2   |
-| GMRC    | 0.1   | 0     | 0     |
 
 ---
 
@@ -409,7 +398,8 @@ knitr::include_graphics(c(
 ## VIMs for predictors of suicide risk
 
 ```{r data-analysis-2, echo = FALSE, fig.show = "hold", out.width = "100%", fig.align = "center", message=FALSE, warning=FALSE}
-knitr::kable(readRDS(file = "img/vim_summaries_presentation.rds")) %>% 
+knitr::kable(readRDS(file = "img/vim_summaries_presentation.rds") %>% 
+               filter(grepl("PHQi9", Comparison, fixed = TRUE))) %>% 
   kableExtra::kable_styling(font_size = 14)
 ```
 
